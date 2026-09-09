@@ -1,11 +1,27 @@
-/* test1
+/* final version 
+
+Shell redirection descriptions
+
 ./tucat f1.txt f2.txt > combined.txt
+-> The shell first creates combined.txt for writing and duplicates the file descriptor
+into fd 1 (stdout). Executes tucat next which calls write(). 
+fd 1 now points at a file instead of the terminal. The output of tucat is 
+written to combined.txt.
 
 ./tucat f1.txt f2.txt >> appended.txt
+-> The shell first creates appended.txt for appending and writes to file
+instead of overwriting appended.txt. 
 
 ./tucat f1.txt 2> errors.txt
+-> The shell points fd 2 at errors.txt. fd 1 still points at the terminal
+which results in the output of tucat being written to the terminal
+and the error messages being written to errors.txt.
 
 ./tucat f1.txt > /dev/null
+-> The shell points fd 1 at /dev/null, that deletes any output written to it.
+No output leads to stderr going to the terminal.
+
+tucat doesn't change, the shell sets up the file descriptors before executing tucat/main()
  */
 
 #include <fcntl.h>
