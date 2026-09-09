@@ -3,22 +3,23 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    char buf[4096];
 
-    for (int i = 1; i < argc; i++) {
+    char buff[4096];
+
+    for (int i =1; i < argc; i++) {
         int fd = open(argv[i], O_RDONLY);
 
         if (fd == -1) {
-            perror("tucat: open");
+            perror("tucat: open"); //open fail
             return 1;
         }
 
         ssize_t n;
-        while ((n = read(fd, buf, sizeof(buf))) > 0) {
-            write(STDOUT_FILENO, buf, n);
+        while ((n = read(fd, buff, sizeof(buff))) > 0) {
+            write(STDOUT_FILENO, buff, n);
 
         if (n == -1) {
-            perror("tucat: read");
+            perror("tucat: read"); //read fail
             return 1;
         }
 
@@ -26,4 +27,5 @@ int main(int argc, char *argv[]) {
     }
 
     return 0;
+	}
 }
