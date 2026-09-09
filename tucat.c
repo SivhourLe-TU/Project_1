@@ -4,21 +4,12 @@
 
 int main() {
     
-	// Create a new file or open it
-	//if it exists (write-only access)
-	// File permissions: rw-r--r--
-	int fd = creat("newfile.txt", 0644);
-
+	int fd = open("example.txt", O_RDONLY);
 	if (fd == -1) {
-		perror("Error creating file");
+		perror("tucat: open");
 		return 1;
 	}
-
-	// File was successfully created
-	printf("File 'newfile.txt' created successfully \n"
-	       "File descriptor: %d\n", fd);
-
-	// Close the file descriptor
+	printf("fd = %d\n", fd);
 	close(fd);
 
 	return 0;
